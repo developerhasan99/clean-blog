@@ -1,44 +1,17 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const posts = require("./lib/posts");
+const authRouter = require("./routers/auth");
 
+// setup Express app
 const app = express();
 app.set("view engine", "ejs");
-
 app.use(express.static("public"));
+app.use(authRouter);
 
 app.get("/post", (req, res) => {
 	res.render("post");
 });
-
-const posts = [
-	{
-		link: "/post",
-		title: "Man must explore, and this is exploration at its greatest",
-		subtitle: "Problems look mighty small from 150 miles up",
-		date: "September 24, 2022",
-		author: "Mehedi Hasan",
-	},
-	{
-		link: "/post",
-		title: "Man must explore, and this is exploration at its greatest",
-		subtitle: "Problems look mighty small from 150 miles up",
-		date: "September 24, 2022",
-		author: "Mehedi Hasan",
-	},
-	{
-		link: "/post",
-		title: "Man must explore, and this is exploration at its greatest",
-		subtitle: "Problems look mighty small from 150 miles up",
-		date: "September 24, 2022",
-		author: "Mehedi Hasan",
-	},
-	{
-		link: "/post",
-		title: "Man must explore, and this is exploration at its greatest",
-		subtitle: "Problems look mighty small from 150 miles up",
-		date: "September 24, 2022",
-		author: "Mehedi Hasan",
-	},
-];
 
 const pageInfo = {
 	seoTitle: "",
@@ -50,6 +23,13 @@ app.get("/", (req, res) => {
 	res.render("index", { posts, pageInfo });
 });
 
+// start the express server
 const PORT = process.env.PORT || 9999;
 
-app.listen(PORT, () => console.log(`Server is runnig on port ${PORT}`));
+// connect database to the application
+mongoose
+	.connect("mongodb://127.0.0.1:27017/clean-blog")
+	.then((data) => {
+		app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+	})
+	.catch((err) => console.error(err));
