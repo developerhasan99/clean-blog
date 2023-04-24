@@ -1,4 +1,12 @@
 const mongoose = require("mongoose");
+const Profile = require("./Profile");
+
+/**
+ * username
+ * password
+ * email
+ * profile
+ */
 
 const userSchema = new mongoose.Schema(
 	{
@@ -20,7 +28,7 @@ const userSchema = new mongoose.Schema(
 		},
 		profile: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Profile",
+			ref: Profile,
 		},
 	},
 	{

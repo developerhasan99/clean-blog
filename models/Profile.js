@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-
+const User = require("./User");
+const Post = require("./Post");
 /**
  * user
  * firstName
@@ -16,7 +17,7 @@ const profileSchema = mongoose.Schema(
 	{
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
+			ref: User,
 			required: true,
 		},
 		firstName: {
@@ -49,14 +50,14 @@ const profileSchema = mongoose.Schema(
 		posts: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "Post",
+				ref: Post,
 			},
 		],
 
 		bookmarks: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "Post",
+				ref: Post,
 			},
 		],
 	},
